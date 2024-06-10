@@ -13,12 +13,12 @@
 > #### BKOZ NFT Staking - Founders
 > * v1.0 Contract address : `NOT DEPLOYED`
 > * Pool start timestamp : NOT FIXED
-> * Maximum NFT amount : 15,000 MPN
+> * Maximum NFT amount : 15,000 Founders
 > * Maximum staking amount : 1,500,000,000 BKOZ
 > #### BKOZ NFT Staking - Compact
 > * v2.1 Contract address : `NOT DEPLOYED`
 > * Pool start timestamp : NOT FIXED
-> * Maximum NFT amount : 50,000 MPN
+> * Maximum NFT amount : 50,000 Compact
 > * Maximum staking amount : 1,000,000,000 BKOZ
 
 > ### Dual Reward ERC-20 Token Staking
@@ -37,10 +37,10 @@
 > #### BKOZ NFT Staking - Founders
 > * v1.0 Contract address : `NOT DEPLOYED`
 > * Pool start timestamp : `1718064000` 2024 April 11st Thursday AM 00:00:00 UTC
-> * Maximum NFT amount : 15,000 MPN
+> * Maximum NFT amount : 15,000 Founders
 > * Maximum staking amount : 1,500,000,000 BKOZ
 > #### BKOZ NFT Staking - Compact
 > * v2.1 Contract address : `NOT DEPLOYED`
 > * Pool start timestamp : `1718064000` 2024 April 11st Thursday AM 00:00:00 UTC
-> * Maximum NFT amount : 50,000 MPN
+> * Maximum NFT amount : 50,000 Compact
 > * Maximum staking amount : 1,000,000,000 BKOZ
