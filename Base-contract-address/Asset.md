@@ -4,6 +4,10 @@
 > * BKOZ NFT (BKNFT) `NOT DEPLOYED`
 > * BKOZ ENTRY Token (ENT) `NOT DEPLOYED`
 > * BKOZ Participation Reward Token (PRT) `NOT DEPLOYED`
+>### PRT and Referral Rule
+> * `1st - 20 PRT`, `2nd - 15 PRT`, `3th - 10 PRT`, `4th and other - 2 PRT`
+> * When a user registers a referral code, the owner of the referral code earns `40 PRT`. 
+> * Additionally, when the user receives a prize from a competition, the owner `receives 5% of the prize`.
 
 > ### ERC-1155 NFT Staking
 > #### BKOZ NFT Staking - Founders
@@ -16,6 +20,11 @@
 > * Pool start timestamp : NOT FIXED
 > * Maximum NFT amount : 50,000 MPN
 > * Maximum staking amount : 1,000,000,000 BKOZ
+
+> ### Dual Reward ERC-20 Token Staking
+> #### Dual Reward Staking v1.3.1 BKOZ to ENT `NOT DEPLOYED`
+> * BKOZ APR 0.0%
+> * ENT APR 600.0%
 
 # Testnet
 >### Asset
