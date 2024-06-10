@@ -1,9 +1,9 @@
 # Mainnet
 >### Asset
-> * BKOZ Token `NOT DEPLOYED`
-> * BKOZ NFT `NOT DEPLOYED`
-> * ENTRY Token `NOT DEPLOYED`
-> * Participation Reward Token `NOT DEPLOYED`
+> * BKOZ Token (BKOZ) `NOT DEPLOYED`
+> * BKOZ NFT (BKNFT) `NOT DEPLOYED`
+> * BKOZ ENTRY Token (ENT) `NOT DEPLOYED`
+> * BKOZ Participation Reward Token (PRT) `NOT DEPLOYED`
 
 > ### ERC-1155 NFT Staking
 > #### BKOZ NFT Staking - Founders
@@ -19,10 +19,10 @@
 
 # Testnet
 >### Asset
-> * BKOZ Token `0x1f3f9DfDf1c2f0f6f7f8f7f8f7f8f7f8f7f8f7f8`
-> * BKOZ NFT `0x1f3f9DfDf1c2f0f6f7f8f7f8f7f8f7f8f7f8f8`
-> * ENTRY Token `0x1f3f9DfDf1c2f0f6f7f8f7f8f7f8f7f8f7f8f9`
-> * Participation Reward Token `0x1f3f9DfDf1c2f0f6f7f8f7f8f7f8f7f8f7f8f0`
+> * tBKOZ Token (BKOZ) `NOT DEPLOYED`
+> * tBKOZ NFT (BKNFT) `NOT DEPLOYED`
+> * tBKOZ ENTRY Token (ENT) `NOT DEPLOYED`
+> * tBKOZ Participation Reward Token (PRT) `NOT DEPLOYED`
 
 > ### ERC-1155 NFT Staking
 > #### BKOZ NFT Staking - Founders
