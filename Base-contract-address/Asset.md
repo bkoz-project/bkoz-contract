@@ -44,3 +44,8 @@
 > * Pool start timestamp : `1718064000` 2024 April 11st Thursday AM 00:00:00 UTC
 > * Maximum NFT amount : 50,000 Compact
 > * Maximum staking amount : 1,000,000,000 BKOZ
+
+> ### Dual Reward ERC-20 Token Staking
+> #### Dual Reward Staking v1.3.1 BKOZ to ENT `NOT DEPLOYED`
+> * BKOZ APR 0.0%
+> * ENT APR 600.0%
