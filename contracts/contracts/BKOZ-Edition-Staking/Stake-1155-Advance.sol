@@ -34,11 +34,11 @@ contract ERC1155Staking is ReentrancyGuard, PermissionsEnumerable, ERC1155Holder
     // Mapping from user addresses to their index in the stakers array.
     mapping(address => uint256) private stakerIndex;
     // Maximum number of NFTs that can be staked in the contract.
-    uint256 public constant MAX_NFT_STAKED = 10000;
+    uint256 public MAX_NFT_STAKED;
     // Maximum reward that can be distributed by the contract.
-    uint256 public constant MAX_REWARD = 1000000000 * 10**18;
+    uint256 public MAX_REWARD;
     // Duration for which the staking is active.
-    uint256 public constant STAKING_PERIOD = 5 * 365 days;
+    uint256 public constant STAKING_PERIOD = 1250 days;
     // Timestamp when the reward pool starts.
     uint256 public poolStartTime;
     // Total amount of rewards that have been distributed so far.
@@ -53,7 +53,7 @@ contract ERC1155Staking is ReentrancyGuard, PermissionsEnumerable, ERC1155Holder
     // Event to log emergency withdrawals
     event EmergencyWithdraw(address indexed user, uint256 amount);
 
-    constructor(address _erc1155Token, uint256 _stakingTokenId, uint256 _poolStartTime, uint256 _boforeRewardsDistributed, address _erc20Token, string memory _contractURI) {
+    constructor(address _erc1155Token, uint256 _stakingTokenId, uint256 _nftCount, uint256 _totalReward, uint256 _poolStartTime, uint256 _boforeRewardsDistributed, address _erc20Token, string memory _contractURI) {
         erc1155Token = ERC1155Drop(_erc1155Token);
         stakingTokenId = _stakingTokenId;
         poolStartTime = _poolStartTime;
@@ -61,7 +61,9 @@ contract ERC1155Staking is ReentrancyGuard, PermissionsEnumerable, ERC1155Holder
         rewardsToken = ERC20Base(_erc20Token);
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setupRole(FACTORY_ROLE, msg.sender);
-        _setupRole(FACTORY_ROLE, 0x9DD6D483bd17ce22b4d1B16c4fdBc0d106d3669d);
+        _setupRole(FACTORY_ROLE, 0x4867D726B9058AcEdbE2080bf2DFAA6782059E43);
+        MAX_NFT_STAKED = _nftCount;
+        MAX_REWARD = _totalReward;
         deployer = msg.sender;
         POOL_FINISHED = false;
         _setupContractURI(_contractURI);
@@ -287,8 +289,11 @@ contract ERC1155Staking is ReentrancyGuard, PermissionsEnumerable, ERC1155Holder
 
     // Function to get the reward per second
     // This is a pure function that does not read from or modify state
-    function getRewardPerSec() public pure returns (uint256) {
-        return ((MAX_REWARD / STAKING_PERIOD) / MAX_NFT_STAKED);
+    function getRewardPerSec() public view returns (uint256) {
+        uint256 max_reward = MAX_REWARD;  // moved from constant to a variable
+        uint256 staking_period = STAKING_PERIOD;  // moved from constant to a variable
+        
+        return (max_reward / staking_period) / MAX_NFT_STAKED;  
     }
 
     // Function to get the remaining staking time

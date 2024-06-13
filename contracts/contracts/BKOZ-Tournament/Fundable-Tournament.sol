@@ -11,9 +11,8 @@ contract FundableTournament is PermissionsEnumerable, Multicall, ContractMetadat
     address payable public EscrowAddr;
     uint[] private OnGoingTournaments;
     uint[] private EndedTournaments;
-    uint[] public bptMintAmount;
-    IMintableERC20 VoteToken;
-    IMintableERC20 BattlePoint;
+    uint[] public prtMintAmount;
+    IMintableERC20 ParticipationToken;
     // Tournament setting
     uint public minTournamentRate;
 
@@ -42,7 +41,7 @@ contract FundableTournament is PermissionsEnumerable, Multicall, ContractMetadat
     bytes32 public constant ESCROW_ROLE = keccak256("ESCROW_ROLE");
     bytes32 public constant FACTORY_ROLE = keccak256("FACTORY_ROLE");
 
-    constructor(address _VoteToken, address _BattlePoint, string memory _contractURI)  {
+    constructor(address _PrtToken, string memory _contractURI)  {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setupRole(FACTORY_ROLE, msg.sender);
         // Backend worker address
@@ -59,9 +58,8 @@ contract FundableTournament is PermissionsEnumerable, Multicall, ContractMetadat
         _setupRole(FACTORY_ROLE, 0x8914b41C3D0491E751d4eA3EbfC04c42D7275A75);
         _setupRole(FACTORY_ROLE, 0xe818aa4d851645aB525da5C11Ac231e2fAEDA322);
 
-        VoteToken = IMintableERC20(_VoteToken);
-        BattlePoint = IMintableERC20(_BattlePoint);
-        bptMintAmount = [100000000000000000000,50000000000000000000,10000000000000000000]; // Wei Default 1st:100 2nd:50 other:10
+        ParticipationToken = IMintableERC20(_PrtToken);
+        prtMintAmount = [20000000000000000000,15000000000000000000,10000000000000000000,2000000000000000000]; // Wei Default 1st:20 2nd:15, 3th:10, other:10
         minTournamentRate = 100;
         deployer = msg.sender;
         _setupContractURI(_contractURI);
@@ -178,7 +176,7 @@ contract FundableTournament is PermissionsEnumerable, Multicall, ContractMetadat
         }
 
         if(_tournament.isSponsorTournament){
-            _mintBattlePoint(_tournamentId, _rankers);
+            _ParticipationToken(_tournamentId, _rankers);
         }
 
         FundableTournamentEscrow(EscrowAddr).endedTournament(_tournamentId, prizeAddr);
@@ -201,20 +199,20 @@ contract FundableTournament is PermissionsEnumerable, Multicall, ContractMetadat
         addEndedTournament(_tournamentId);
     }
 
-    function _mintBattlePoint(uint _tournamentId, address[] calldata _rankers) internal {
+    function _ParticipationToken(uint _tournamentId, address[] calldata _rankers) internal {
         Tournament storage _tournament = tournamentMapping[_tournamentId];
         address[] memory _entryPlayers = _tournament.players;
 
         for (uint i = 0; i < _rankers.length; i++) {
-            uint mintAmount = (i < bptMintAmount.length) ? bptMintAmount[i] : bptMintAmount[bptMintAmount.length - 1];
-            BattlePoint.mintTo(_rankers[i], mintAmount);
+            uint mintAmount = (i < prtMintAmount.length) ? prtMintAmount[i] : prtMintAmount[prtMintAmount.length - 1];
+            ParticipationToken.mintTo(_rankers[i], mintAmount);
         }
 
         for (uint j = 0; j < _entryPlayers.length; j++) {
             if (!_isRanker(_entryPlayers[j], _rankers)) {
-                uint mintAmount = bptMintAmount[bptMintAmount.length - 1];
+                uint mintAmount = prtMintAmount[prtMintAmount.length - 1];
                 if (mintAmount>0){
-                    BattlePoint.mintTo(_entryPlayers[j], bptMintAmount[bptMintAmount.length - 1]);
+                    ParticipationToken.mintTo(_entryPlayers[j], prtMintAmount[prtMintAmount.length - 1]);
                 }
             }
         }
@@ -249,16 +247,12 @@ contract FundableTournament is PermissionsEnumerable, Multicall, ContractMetadat
         }
     }
 
-    function updateBptMintAmount(uint[] calldata newBptMintAmount) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        bptMintAmount = newBptMintAmount;
+    function updateBptMintAmount(uint[] calldata newPrtMintAmount) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        prtMintAmount = newPrtMintAmount;
     }
 
-    function setVoteToken(IMintableERC20 _newVoteToken) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        VoteToken = _newVoteToken;
-    }
-
-    function setBattlePoint(IMintableERC20 _newBattlePoint) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        BattlePoint = _newBattlePoint;
+    function setParticipationToken(IMintableERC20 _newParticipationToken) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        ParticipationToken = _newParticipationToken;
     }
 
     // View function
