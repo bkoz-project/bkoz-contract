@@ -26,6 +26,7 @@ contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractM
     address public deployer;
     address public admin;
     // Royalty setting
+    uint public DiscountRef;
     uint public RoyaltyPrizeRef;
     uint public RoyaltyPrizeFlp;
     uint public RoyaltyRegfeeFlp;
@@ -98,7 +99,9 @@ contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractM
         RoyaltyPrizeFlp = 5;
         RoyaltyRegfeeFlp = 5;
         // Set Referee user royalty
-        RoyaltyPrizeReferee = 5;
+        RoyaltyPrizeReferee = 2;
+        // Set referal discount
+        DiscountRef = 3;
         // Set default funding setting
         minFundingRate = 100;
         baseLimit = 200e6;
@@ -421,9 +424,21 @@ contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractM
             if (_prizeAmount > 0) {
                 // Calculate PRIZE and transfer
                 address referral = fetchReferrer(_winner[i]);
-                uint256 _prizeReferral = (_prizeAmount * RoyaltyPrizeRef) / 100;
-                uint256 _prizeFlp = (_prizeAmount * RoyaltyPrizeFlp) / 100;
-                uint256 _prizeUser = _prizeAmount - (_prizeReferral + _prizeFlp);
+                uint256 _prizeReferral = 0;
+                uint256 _prizeUser = 0;
+                uint256 _prizeFlp = 0;
+                
+                _prizeUser = _prizeAmount - _prizeFlp;
+
+                if (referral != address(0)) {
+                    // Discount
+                    _prizeFlp = (_prizeAmount * (RoyaltyPrizeFlp-DiscountRef)) / 100;
+                    _prizeReferral = (_prizeAmount * RoyaltyPrizeRef) / 100;
+                    _prizeUser = _prizeAmount - _prizeFlp - _prizeReferral;
+                }else{
+                    _prizeFlp = (_prizeAmount * RoyaltyPrizeFlp) / 100;
+                    _prizeUser = _prizeAmount - _prizeFlp;
+                }
 
                 if (_tournament.referees.length > 0 && _tournament.referees[0] != address(0)) {
                     uint256 _totalRefereePrize = (_prizeAmount * RoyaltyPrizeReferee) / 100; // 00% of prize amount for Referees
@@ -434,11 +449,14 @@ contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractM
                     }
                     _prizeUser -= _totalRefereePrize; // Adjust user prize after Referees' distribution
                 }
-                _transferToken(_tournament.prizeToken, referral, _prizeReferral);
+
+                if (referral != address(0) && _prizeReferral > 0) {
+                    _transferToken(_tournament.prizeToken, referral, _prizeReferral);
+                }
                 _transferToken(_tournament.prizeToken, royaltyAddrFlp, _prizeFlp);
                 _transferToken(_tournament.prizeToken, _winner[i], _prizeUser);
             }
-        }
+        } 
         emit UnlockPrize(_tournamentId, _tournament.prizeAmount);
     }
 
@@ -482,18 +500,27 @@ contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractM
         royaltyAddrFlp = _royaltyAddr;
     }
 
-    // Set prize royalty rate
+    // Set prize royalty rate for Referal
     function setPrizeRoyaltyRefRate(uint _royaltyRate) external onlyRole(DEFAULT_ADMIN_ROLE){
+        require(_royaltyRate <= 20);
         RoyaltyPrizeRef = _royaltyRate;
     }
 
+    // Set prize royalty rate for Flatform
     function setPrizeRoyaltyFlpRate(uint _royaltyRate) external onlyRole(DEFAULT_ADMIN_ROLE){
+        require(_royaltyRate <= 20);
         RoyaltyPrizeFlp = _royaltyRate;
     }
 
-    // Set regfee royalty rate
+    // Set regfee royalty rate for Flatform
     function setRegfeeRoyaltyFlpRate(uint _royaltyRate) external onlyRole(DEFAULT_ADMIN_ROLE){
+        require(_royaltyRate <= 20);
         RoyaltyRegfeeFlp = _royaltyRate;
+    }
+
+    function setDiscountRefRate(uint _discountRate) external onlyRole(DEFAULT_ADMIN_ROLE){
+        require(_discountRate <= 10);
+        DiscountRef = _discountRate;
     }
 
     // Set Funding
