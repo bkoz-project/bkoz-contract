@@ -1,0 +1,22 @@
+{
+  "mainnet": {
+    "Testgame": {
+      "Tournament": {
+        "0.8.3": "NOTDEPLOYED"
+      },
+      "Escrow": {
+        "0.8.3": "NOTDEPLOYED"
+      }
+    }
+  },
+  "testnet": {
+    "Test Game": {
+      "Tournament": {
+        "0.8.3": "0x6FA3cc9C074878e9a024E85F2796FE13e3DF9782"
+      },
+      "Escrow": {
+        "0.8.3": "0xFe77d7334FCa7645c2C4fA56264Cd75Ebb753EBA"
+      }
+    }
+  }
+}

@@ -34,12 +34,12 @@
 
 > ### ERC-1155 NFT Staking
 > #### BKOZ NFT Staking - Founders
-> * v1.0 Contract address : `NOT DEPLOYED`
+> * v1.0 Contract address : `0x438d0bdF8E78adbFae6b4A01A7e7dF3D47e144Ff`
 > * Pool start timestamp : `1718064000` 2024 April 11st Thursday AM 00:00:00 UTC
 > * Maximum NFT amount : 15,000 Founders
 > * Maximum staking amount : 1,500,000,000 BKOZ
 > #### BKOZ NFT Staking - Compact
-> * v2.1 Contract address : `NOT DEPLOYED`
+> * v2.1 Contract address : `0xe5E06A6A67cf747f00E2Cc83FB6C04b9dF5C925a`
 > * Pool start timestamp : `1718064000` 2024 April 11st Thursday AM 00:00:00 UTC
 > * Maximum NFT amount : 50,000 Compact
 > * Maximum staking amount : 1,000,000,000 BKOZ
