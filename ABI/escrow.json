@@ -1,0 +1,1484 @@
+[
+  {
+    "type": "constructor",
+    "name": "",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_royaltyAddrFlp",
+        "internalType": "address"
+      },
+      {
+        "type": "address[]",
+        "name": "_stakingContractAddresses",
+        "internalType": "address[]"
+      },
+      {
+        "type": "address",
+        "name": "_assetMasterAddr",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "referralSystemAddress",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "_miracletournament",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "_miraclePass",
+        "internalType": "address"
+      },
+      {
+        "type": "string",
+        "name": "_contractURI",
+        "internalType": "string"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "error",
+    "name": "ContractMetadataUnauthorized",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "type": "error",
+    "name": "PermissionsAlreadyGranted",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account",
+        "internalType": "address"
+      },
+      {
+        "type": "bytes32",
+        "name": "role",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "error",
+    "name": "PermissionsInvalidPermission",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "expected",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "actual",
+        "internalType": "address"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "error",
+    "name": "PermissionsUnauthorizedAccount",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account",
+        "internalType": "address"
+      },
+      {
+        "type": "bytes32",
+        "name": "neededRole",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "event",
+    "name": "ContractURIUpdated",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "prevURI",
+        "indexed": false,
+        "internalType": "string"
+      },
+      {
+        "type": "string",
+        "name": "newURI",
+        "indexed": false,
+        "internalType": "string"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "EscrowCreated",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tournamentId",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "organizer",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "Fund",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tournamentId",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "fundingUser",
+        "indexed": false,
+        "internalType": "address"
+      },
+      {
+        "type": "uint256",
+        "name": "fundingAmount",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "FundCanceled",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tournamentId",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "FundEnded",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tournamentId",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "KickPlayer",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tournamentId",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "Registration",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tournamentId",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "RoleAdminChanged",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
+        "indexed": true,
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "RoleGranted",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "RoleRevoked",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "TournamentCanceled",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tournamentId",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "TournamentEnded",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tournamentId",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "UnlockFee",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tournamentId",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "amount",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "UnlockPrize",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tournamentId",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "amount",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "function",
+    "name": "DEFAULT_ADMIN_ROLE",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "DiscountRef",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "FACTORY_ROLE",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "RoyaltyPrizeFlp",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "RoyaltyPrizeRef",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "RoyaltyPrizeReferee",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "RoyaltyRegfeeFlp",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "TOURNAMENT_ROLE",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "admin",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "assetMasterAddr",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "contract AssetMaster"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "baseLimit",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "calculateMaxFundingLimit",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "stakedNFTs",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "cancelFunding",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tournamentId",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "canceledTournament",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tournamentId",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address[]",
+        "name": "_entryPlayers",
+        "internalType": "address[]"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "connectAssestMaster",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_assetMasterAddr",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "connectEditionStakings",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_stakingContractAddresses",
+        "internalType": "address[]"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "connectMiraclePass",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_miraclePassAddr",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "connectTournament",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_miracletournament",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "contractURI",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string",
+        "name": "",
+        "internalType": "string"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "createTournamentEscrow",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_tournamentInfo",
+        "internalType": "uint256[]"
+      },
+      {
+        "type": "bool",
+        "name": "_isFunding",
+        "internalType": "bool"
+      },
+      {
+        "type": "address[]",
+        "name": "_prizeFeeToken",
+        "internalType": "address[]"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_prizeFeeAmount",
+        "internalType": "uint256[]"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_regStartEndTime",
+        "internalType": "uint256[]"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_FundStartEndTime",
+        "internalType": "uint256[]"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_prizeAmountArray",
+        "internalType": "uint256[]"
+      },
+      {
+        "type": "string",
+        "name": "_tournamentURI",
+        "internalType": "string"
+      },
+      {
+        "type": "uint256",
+        "name": "_playerLimit",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address[]",
+        "name": "_referees",
+        "internalType": "address[]"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "deployer",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "endFunding",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tournamentId",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "endedTournament",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tournamentId",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address[]",
+        "name": "_withdrawAddresses",
+        "internalType": "address[]"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "fetchReferrer",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "fundTournament",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tournamentId",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "_amount",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "fundingMapping",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "startTime",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "endTime",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "fundingToken",
+        "internalType": "contract IERC20"
+      },
+      {
+        "type": "uint256",
+        "name": "totalFunded",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "fundingGoal",
+        "internalType": "uint256"
+      },
+      {
+        "type": "bool",
+        "name": "fundingActive",
+        "internalType": "bool"
+      },
+      {
+        "type": "bool",
+        "name": "fundingEnded",
+        "internalType": "bool"
+      },
+      {
+        "type": "bool",
+        "name": "fundingCanceled",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getFundingDetails",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tournamentId",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "startTime",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "endTime",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "fundingToken",
+        "internalType": "address"
+      },
+      {
+        "type": "uint256",
+        "name": "totalFunded",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "fundingGoal",
+        "internalType": "uint256"
+      },
+      {
+        "type": "bool",
+        "name": "fundingActive",
+        "internalType": "bool"
+      },
+      {
+        "type": "bool",
+        "name": "fundingEnded",
+        "internalType": "bool"
+      },
+      {
+        "type": "bool",
+        "name": "fundingCanceled",
+        "internalType": "bool"
+      },
+      {
+        "type": "address[]",
+        "name": "contributors",
+        "internalType": "address[]"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getFundingProgress",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tournamentId",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getMinFundingRate",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getReferees",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tournamentId",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "referees",
+        "internalType": "address[]"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getRoleAdmin",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getRoleMember",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "internalType": "bytes32"
+      },
+      {
+        "type": "uint256",
+        "name": "index",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "member",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getRoleMemberCount",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "count",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getTotalUserStakedAmount",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "totalAmount",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "grantRole",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "internalType": "bytes32"
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "hasRole",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "internalType": "bytes32"
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "hasRoleWithSwitch",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "internalType": "bytes32"
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "isFundingSuccess",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tournamentId",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "isSponsor",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "isSponsorRole",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "kickPlayer",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tournamentId",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "_player",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "minFundingRate",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "miraclePass",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "contract iMiraclePass"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "miracletournament",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "contract FundableTournament"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "multicall",
+    "inputs": [
+      {
+        "type": "bytes[]",
+        "name": "data",
+        "internalType": "bytes[]"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes[]",
+        "name": "results",
+        "internalType": "bytes[]"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "register",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tournamentId",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "renounceRole",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "internalType": "bytes32"
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "revokeRole",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "internalType": "bytes32"
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "royaltyAddrFlp",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "setContractURI",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "_uri",
+        "internalType": "string"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setDiscountRefRate",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_discountRate",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setMinimumFundingRate",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newRate",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setPrizeRoyaltyFlpRate",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_royaltyRate",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setPrizeRoyaltyRefRate",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_royaltyRate",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setRegfeeRoyaltyFlpRate",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_royaltyRate",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setRoyaltyFlpAddress",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_royaltyAddr",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "stakingContracts",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "contract IStakingContract"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "tierValify",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_gameTier",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "user",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "tournamentMapping",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "organizer",
+        "internalType": "address"
+      },
+      {
+        "type": "bool",
+        "name": "isFunding",
+        "internalType": "bool"
+      },
+      {
+        "type": "bool",
+        "name": "isSponsored",
+        "internalType": "bool"
+      },
+      {
+        "type": "uint256",
+        "name": "tier",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "prizeToken",
+        "internalType": "contract IERC20"
+      },
+      {
+        "type": "address",
+        "name": "feeToken",
+        "internalType": "contract IERC20"
+      },
+      {
+        "type": "uint256",
+        "name": "prizeAmount",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "joinFee",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "feeBalance",
+        "internalType": "uint256"
+      },
+      {
+        "type": "bool",
+        "name": "tournamentCreated",
+        "internalType": "bool"
+      },
+      {
+        "type": "bool",
+        "name": "tournamentEnded",
+        "internalType": "bool"
+      },
+      {
+        "type": "bool",
+        "name": "tournamentCanceled",
+        "internalType": "bool"
+      },
+      {
+        "type": "string",
+        "name": "tournamentURI",
+        "internalType": "string"
+      },
+      {
+        "type": "uint256",
+        "name": "PlayersLimit",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  }
+]
