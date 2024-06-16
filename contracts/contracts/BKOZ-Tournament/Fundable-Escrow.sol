@@ -94,14 +94,14 @@ contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractM
             stakingContracts.push(IStakingContract(_stakingContractAddresses[i]));
         }
         // Set default Ref royalty
-        RoyaltyPrizeRef = 5;
+        RoyaltyPrizeRef = 2;
         // Set default platform royalty 
-        RoyaltyPrizeFlp = 5;
+        RoyaltyPrizeFlp = 10;
         RoyaltyRegfeeFlp = 5;
         // Set Referee user royalty
         RoyaltyPrizeReferee = 2;
         // Set referal discount
-        DiscountRef = 3;
+        DiscountRef = 5;
         // Set default funding setting
         minFundingRate = 100;
         baseLimit = 200e6;
