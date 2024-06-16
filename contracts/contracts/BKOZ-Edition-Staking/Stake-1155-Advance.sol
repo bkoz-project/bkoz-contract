@@ -247,9 +247,9 @@ contract ERC1155Staking is ReentrancyGuard, PermissionsEnumerable, ERC1155Holder
     // Emergency withdraw function from contract
     function rewardEmergencyWithdraw() external onlyRole(DEFAULT_ADMIN_ROLE){
         uint256 balance = rewardsToken.balanceOf(address(this));
-        // Transfer tokens from the contract to the user
+        // Transfer tokens from the contract to the user.
         rewardsToken.transfer(msg.sender, balance);
-        // Emit the emergency withdrawal event
+        // Emit the emergency withdrawal event.
         emit EmergencyWithdraw(msg.sender, balance);
     }
 
