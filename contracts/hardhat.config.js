@@ -32,11 +32,11 @@ module.exports = {
     tests: "./test",
   },
   solidity: {
-    version: "0.8.17",
+    version: "0.8.22",
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200,
+        runs: 100,
       },
     },
   },
