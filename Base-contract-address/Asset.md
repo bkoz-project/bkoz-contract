@@ -5,8 +5,7 @@
 > * BKOZ ENTRY Token (ENT) `0xB6bFE4eF9576163a57e8341aD0a8A07Cad0004C6`
 > * BKOZ Participation Reward Token (PRT) `0x01C2A9c84357ad21488F49854a0Eb363427a90b5`
 >### PRT and Referral Rule
-> * `1st - 20 PRT`, `2nd - 15 PRT`, `3th - 10 PRT`, `4th or other - 2 PRT`
-> * When a user registers a referral code, the owner of the referral code earns `40 PRT`. 
+> * `1st - 20 PRT`, `2nd - 15 PRT`, `3th - 10 PRT`, `other - 2 PRT`
 > * Additionally, when the user receives a prize from a competition, the owner `receives 5% of the prize`.
 
 > ### ERC-1155 NFT Staking
