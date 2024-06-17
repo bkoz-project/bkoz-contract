@@ -7,6 +7,8 @@
 >### PRT and Referral Rule
 > * `1st - 20 PRT`, `2nd - 15 PRT`, `3th - 10 PRT`, `other - 2 PRT`
 > * Additionally, when the user receives a prize from a competition, the owner `receives 5% of the prize`.
+>### ManagedAccountFactory
+> * ManagedAccountFactory `0x5C4b64b45763F5DDA54b8CE6C425bf9CE4703D2f
 
 > ### ERC-1155 NFT Staking
 > #### BKOZ NFT Staking - Founders
@@ -31,6 +33,8 @@
 > * tBKOZ NFT (BKNFT) `0x6600Ee84700c635cdfDb6356f3702b1BF4307397`
 > * tBKOZ ENTRY Token (ENT) `0xE98EEcC429792e8495ec9514a9c944FD8ca9696C`
 > * tBKOZ Participation Reward Token (PRT) `0xD4Bd1a954A8340ae6FD9d8D81344331f563d88D6`
+>### ManagedAccountFactory
+> * ManagedAccountFactory `0x9f24722F1812e01050048dD32c26561A939c1711
 
 > ### ERC-1155 NFT Staking
 > #### BKOZ NFT Staking - Founders
