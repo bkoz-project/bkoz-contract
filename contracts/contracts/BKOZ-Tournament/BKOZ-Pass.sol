@@ -13,7 +13,7 @@ interface IERC20 {
 
 // Pass Info 
 // 1 = Premium / 2 = Platinum
-contract MiraclePassControl is PermissionsEnumerable, Multicall, ContractMetadata{
+contract BKOZPassControl is PermissionsEnumerable, Multicall, ContractMetadata{
     address public deployer;
 
     struct Pass {
