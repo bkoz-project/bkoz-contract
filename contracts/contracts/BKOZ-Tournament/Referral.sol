@@ -1,15 +1,25 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@thirdweb-dev/contracts/extension/ContractMetadata.sol";
 
-contract ReferralSystem {
+contract ReferralSystem is ContractMetadata{
+    address public deployer;
+
     // Mapping from user address to referrer address
     mapping(address => address) private referrals;
 
     // Event to log new referrals
     event ReferralSet(address indexed user, address indexed referrer);
     event DefaultReferrerChanged(address indexed oldReferrer, address indexed newReferrer);
+
+    constructor() {
+        deployer = msg.sender;
+    }
+    
+    function _canSetContractURI() internal view virtual override returns (bool){
+        return msg.sender == deployer;
+    }
 
     // Function to set a referrer for the caller
     function setReferrer(address _referrer) external {

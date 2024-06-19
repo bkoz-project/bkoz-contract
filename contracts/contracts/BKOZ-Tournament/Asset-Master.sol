@@ -2,7 +2,11 @@
 // BKOZ Asset Master v1.0
 pragma solidity ^0.8.0;
 
-contract AssetMaster {
+import "@thirdweb-dev/contracts/extension/ContractMetadata.sol";
+
+contract AssetMaster is ContractMetadata{
+    address public deployer;
+
     address public owner;
     address[] public erc20Whitelist;
     address[] public erc721Whitelist;
@@ -19,11 +23,16 @@ contract AssetMaster {
 
     constructor() {
         owner = msg.sender;
+        deployer = msg.sender;
     }
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Not the owner");
         _;
+    }
+
+    function _canSetContractURI() internal view virtual override returns (bool){
+        return msg.sender == deployer;
     }
 
     // Add to ERC20 Whitelist

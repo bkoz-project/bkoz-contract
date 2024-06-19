@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 import "@thirdweb-dev/contracts/extension/PermissionsEnumerable.sol";
 import "@thirdweb-dev/contracts/extension/Multicall.sol";
+import "@thirdweb-dev/contracts/extension/ContractMetadata.sol";
 
 interface IERC20 {
     function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
@@ -11,7 +13,9 @@ interface IERC20 {
 
 // Pass Info 
 // 1 = Premium / 2 = Platinum
-contract MiraclePassControl is PermissionsEnumerable, Multicall{
+contract MiraclePassControl is PermissionsEnumerable, Multicall, ContractMetadata{
+    address public deployer;
+
     struct Pass {
         bool hasPlatinum;
         bool hasPremium;
@@ -27,8 +31,12 @@ contract MiraclePassControl is PermissionsEnumerable, Multicall{
 
     constructor() {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        deployer = msg.sender;
     }
 
+    function _canSetContractURI() internal view virtual override returns (bool){
+        return msg.sender == deployer;
+    }
 
     function setPassPrice(uint256 passType, address tokenAddress, uint256 price) public onlyRole(DEFAULT_ADMIN_ROLE){
         supportedTokens[tokenAddress] = true;
