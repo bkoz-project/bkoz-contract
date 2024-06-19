@@ -13,10 +13,11 @@ contract ReferralSystem is ContractMetadata{
     event ReferralSet(address indexed user, address indexed referrer);
     event DefaultReferrerChanged(address indexed oldReferrer, address indexed newReferrer);
 
-    constructor() {
+    constructor(string memory _contractURI) {
         deployer = msg.sender;
+        _setupContractURI(_contractURI);
     }
-    
+
     function _canSetContractURI() internal view virtual override returns (bool){
         return msg.sender == deployer;
     }

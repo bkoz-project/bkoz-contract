@@ -29,9 +29,10 @@ contract MiraclePassControl is PermissionsEnumerable, Multicall, ContractMetadat
     mapping(address => Pass) public passInfo;
     uint256 public constant DURATION = 30 days;
 
-    constructor() {
+    constructor(string memory _contractURI) {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         deployer = msg.sender;
+        _setupContractURI(_contractURI);
     }
 
     function _canSetContractURI() internal view virtual override returns (bool){

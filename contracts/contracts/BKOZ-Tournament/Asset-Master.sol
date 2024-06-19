@@ -21,9 +21,10 @@ contract AssetMaster is ContractMetadata{
     uint256 public tournamentParticipationFee;
     address public feeRecipient;
 
-    constructor() {
+    constructor(string memory _contractURI) {
         owner = msg.sender;
         deployer = msg.sender;
+        _setupContractURI(_contractURI);
     }
 
     modifier onlyOwner() {
