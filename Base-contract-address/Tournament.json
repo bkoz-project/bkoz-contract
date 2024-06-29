@@ -1,21 +1,21 @@
 {
   "mainnet": {
-    "Testgame": {
+    "BkozPoker": {
       "Tournament": {
-        "0.8.3": "NOTDEPLOYED"
+        "0.8.3": "0x2B2BA892a9948E162813aeF70527628d7090D2dD"
       },
       "Escrow": {
-        "0.8.3": "NOTDEPLOYED"
+        "0.8.3": "0x69DDe8EcCDf5FA4c58306c66c2488e9EfdacA580"
       }
     }
   },
   "testnet": {
-    "Test Game": {
+    "TestGame": {
       "Tournament": {
-        "0.8.3": "0x6FA3cc9C074878e9a024E85F2796FE13e3DF9782"
+        "0.8.3": "0xfF0F0BB95cae23cc755e7c1b6b1398f6bFa7952f"
       },
       "Escrow": {
-        "0.8.3": "0xFe77d7334FCa7645c2C4fA56264Cd75Ebb753EBA"
+        "0.8.3": "0x906460653A4440555a4BEc851e2aD77D60a1bFC7"
       }
     }
   }
