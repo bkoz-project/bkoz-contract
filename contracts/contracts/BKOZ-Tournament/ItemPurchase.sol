@@ -23,6 +23,7 @@ contract InAppItemPurchase {
     event AdminSharePercentageChanged(uint256 newAdminSharePercentage);
     event ItemPriceChanged(uint256 indexed itemId, address indexed tokenAddress, uint256 newPrice);
     event ItemRemoved(uint256 indexed itemId);
+    event DeveloperAddressChanged(address newDeveloper);
     
     modifier onlyAdmin() {
         require(msg.sender == admin, "Only admin can call this function");
@@ -82,6 +83,11 @@ contract InAppItemPurchase {
         IERC20(_tokenAddress).transferFrom(msg.sender, developer, developerAmount);
         
         emit ItemPurchased(msg.sender, _itemId, _tokenAddress, adminAmount, developerAmount);
+    }
+
+    function changeDeveloperAddress(address _newDeveloper) external onlyAdmin {
+        developer = _newDeveloper;
+        emit DeveloperAddressChanged(_newDeveloper);
     }
     
     function changeAdminSharePercentage(uint256 _newAdminSharePercentage) external onlyAdmin {
