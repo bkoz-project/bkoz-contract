@@ -17,9 +17,9 @@ interface IStakingContract {
     function stakings(address user) external view returns (uint256, uint256, uint256);
 }
 
-interface iMiraclePass {
-    function hasValidPremiumPass(address user) external view returns (bool);
-    function hasValidPlatinumPass(address user) external view returns (bool);
+interface ITirePass {
+    function hasValidGoldPass(address user) external view returns (bool);
+    function hasValidDiamondPass(address user) external view returns (bool);
 }
 
 contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractMetadata {
@@ -40,14 +40,14 @@ contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractM
     AssetMaster public assetMasterAddr;
     // Get NFT Staking info from NFT Staking
     IStakingContract[] public stakingContracts;
-    // Miracle Pass
-    iMiraclePass public miraclePass;
+    // Tire Pass
+    ITirePass public tirePass;
 
     // Permissions
     bytes32 public constant TOURNAMENT_ROLE = keccak256("TOURNAMENT_ROLE");
     bytes32 public constant FACTORY_ROLE = keccak256("FACTORY_ROLE");
 
-    FundableTournament public miracletournament;
+    FundableTournament public tournament;
 
     struct Tournament {
         address organizer;
@@ -86,7 +86,7 @@ contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractM
     event UnlockPrize(uint tournamentId, uint amount);
     event UnlockFee(uint tournamentId, uint amount);
 
-    constructor(address _royaltyAddrFlp, address[] memory _stakingContractAddresses, address _assetMasterAddr, address referralSystemAddress, address _miracletournament, address _miraclePass, string memory _contractURI) {
+    constructor(address _royaltyAddrFlp, address[] memory _stakingContractAddresses, address _assetMasterAddr, address referralSystemAddress, address _tournament, address _tirePass, string memory _contractURI) {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         royaltyAddrFlp = _royaltyAddrFlp;
         // Set staking contract
@@ -109,10 +109,10 @@ contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractM
         // Set asset master contract
         assetMasterAddr = AssetMaster(_assetMasterAddr);
         // Set tournament contract
-        _setupRole(TOURNAMENT_ROLE, _miracletournament);
-        miracletournament = FundableTournament(_miracletournament);
-        // Set miracle pass contract
-        miraclePass = iMiraclePass(_miraclePass);
+        _setupRole(TOURNAMENT_ROLE, _tournament);
+        tournament = FundableTournament(_tournament);
+        // Set tier pass contract
+        tirePass = ITirePass(_tirePass);
         _setupContractURI(_contractURI);
         // Set default tournament admin
         _setupRole(FACTORY_ROLE, msg.sender); // Deployer tournament admin
@@ -154,17 +154,17 @@ contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractM
         }
     }
 
-    function connectTournament(address _miracletournament) external onlyRole(DEFAULT_ADMIN_ROLE){
-        _setupRole(TOURNAMENT_ROLE, _miracletournament);
-        miracletournament = FundableTournament(_miracletournament);
+    function connectTournament(address _tournament) external onlyRole(DEFAULT_ADMIN_ROLE){
+        _setupRole(TOURNAMENT_ROLE, _tournament);
+        tournament = FundableTournament(_tournament);
     }
 
     function connectAssestMaster(address _assetMasterAddr) external onlyRole(DEFAULT_ADMIN_ROLE){
         assetMasterAddr = AssetMaster(_assetMasterAddr);
     }
 
-    function connectMiraclePass(address _miraclePassAddr) external onlyRole(DEFAULT_ADMIN_ROLE){
-        miraclePass = iMiraclePass(_miraclePassAddr);
+    function connectTirePass(address _tirePassAddr) external onlyRole(DEFAULT_ADMIN_ROLE){
+        tirePass = ITirePass(_tirePassAddr);
     }
 
     // Create tournament
@@ -206,7 +206,7 @@ contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractM
         newTournament.tournamentURI = _tournamentURI;
         newTournament.referees = _referees;
         newTournament.PlayersLimit = _playerLimit;
-        miracletournament.createTournament(_tournamentInfo[0], _isFunding, _isSponsor, msg.sender, _regStartEndTime[0], _regStartEndTime[1], _prizeAmountArray.length, _playerLimit);
+        tournament.createTournament(_tournamentInfo[0], _isFunding, _isSponsor, msg.sender, _regStartEndTime[0], _regStartEndTime[1], _prizeAmountArray.length, _playerLimit);
 
         _payFeeCreate();
 
@@ -265,7 +265,7 @@ contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractM
             _tournament.feeBalance = _tournament.feeBalance + _tournament.joinFee;
         }
         
-        miracletournament.register(_tournamentId, msg.sender);
+        tournament.register(_tournamentId, msg.sender);
         emit Registration(_tournamentId, msg.sender);
     }
 
@@ -335,9 +335,9 @@ contract FundableTournamentEscrow is PermissionsEnumerable, Multicall, ContractM
     // Check tier pass
     function tierValify(uint _gameTier, address user) public view returns (bool) {
         if(_gameTier == 1){
-            return miraclePass.hasValidPremiumPass(user);
+            return tirePass.hasValidGoldPass(user);
         }else if(_gameTier == 2){
-            return miraclePass.hasValidPlatinumPass(user);
+            return tirePass.hasValidDiamondPass(user);
         }else{
             return true;
         }
