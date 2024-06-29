@@ -3,8 +3,9 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@thirdweb-dev/contracts/extension/ContractMetadata.sol";
 
-contract InAppItemPurchase {
+contract InAppItemPurchase is ContractMetadata {
     address public admin;
     address public developer;
     uint256 public adminSharePercentage; // in percentage (e.g., 50 for 50%)
@@ -29,12 +30,18 @@ contract InAppItemPurchase {
         require(msg.sender == admin, "Only admin can call this function");
         _;
     }
+
+    function _canSetContractURI() internal view virtual override returns (bool){
+        return msg.sender == admin;
+    }
+
     
-    constructor(address _admin, address _developer, uint256 _adminSharePercentage) {
+    constructor(address _admin, address _developer, uint256 _adminSharePercentage, string memory _contractURI) {
         admin = _admin;
         developer = _developer;
         adminSharePercentage = _adminSharePercentage;
         itemCount = 0;
+        _setupContractURI(_contractURI);
     }
     
     function setItem(uint256 _itemId, address[] memory _tokenAddresses, uint256[] memory _prices) external onlyAdmin {
