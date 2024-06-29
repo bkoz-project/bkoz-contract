@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract ItemPurchaseContract {
+contract InAppItemPurchase {
     address public admin;
     address public developer;
     uint256 public adminSharePercentage; // in percentage (e.g., 50 for 50%)

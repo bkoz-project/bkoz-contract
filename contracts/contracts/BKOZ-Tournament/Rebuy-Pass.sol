@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-// BKOZ Penalty Pass V1.0
+// BKOZ Rebuy Pass V1.0
 pragma solidity ^0.8.0;
 
 import "@thirdweb-dev/contracts/extension/PermissionsEnumerable.sol";
@@ -12,12 +12,12 @@ interface IERC20 {
     function transfer(address recipient, uint256 amount) external returns (bool);
 }
 
-contract PenaltyPass is PermissionsEnumerable, Multicall, ContractMetadata{
+contract RebuyPass is PermissionsEnumerable, Multicall, ContractMetadata{
     address public deployer;
 
     struct Pass {
-        bool hasPenaltyPass;
-        uint256 PenaltyPassExpiryDate;
+        bool hasRebuyPass;
+        uint256 RebuyPassExpiryDate;
     }
 
     address public admin;
@@ -48,41 +48,41 @@ contract PenaltyPass is PermissionsEnumerable, Multicall, ContractMetadata{
         require(token.transfer(msg.sender, balance), "Transfer failed");
     } 
 
-    // Penalty Pass
-    function getPenaltyPassPrice(address tokenAddress) public view returns (uint256) {
+    // Rebuy Pass
+    function getRebuyPassPrice(address tokenAddress) public view returns (uint256) {
         require(supportedTokens[tokenAddress], "Token not supported");
         return passPrices[tokenAddress][1];
     }
 
-    function buyPenaltyPass(address _tokenAddress) public {
-        require(!hasValidPenaltyPass(msg.sender), "Already owns a valid Penalty Pass");
+    function buyRebuyPass(address _tokenAddress) public {
+        require(!hasValidRebuyPass(msg.sender), "Already owns a valid Rebuy Pass");
         require(supportedTokens[_tokenAddress], "Token not supported");
         uint256 price = passPrices[_tokenAddress][1];
 
         IERC20 token = IERC20(_tokenAddress);
         require(token.transferFrom(msg.sender, address(this), price), "Token Transfer failed");
 
-        _issuePenaltyPass(msg.sender);
+        _issueRebuyPass(msg.sender);
     }
 
-    function _issuePenaltyPass(address user) internal {
-        passInfo[user].hasPenaltyPass = true;
-        passInfo[user].PenaltyPassExpiryDate = block.timestamp + DURATION;
+    function _issueRebuyPass(address user) internal {
+        passInfo[user].hasRebuyPass = true;
+        passInfo[user].RebuyPassExpiryDate = block.timestamp + DURATION;
     }
 
-    function hasValidPenaltyPass(address user) public view returns (bool) {
-        return passInfo[user].hasPenaltyPass && block.timestamp <= passInfo[user].PenaltyPassExpiryDate;
+    function hasValidRebuyPass(address user) public view returns (bool) {
+        return passInfo[user].hasRebuyPass && block.timestamp <= passInfo[user].RebuyPassExpiryDate;
     }
 
-    function getRemainingPenaltyPass(address user) public view returns (uint256) {
-        if (passInfo[user].hasPenaltyPass && passInfo[user].PenaltyPassExpiryDate > block.timestamp) {
-            return passInfo[user].PenaltyPassExpiryDate - block.timestamp;
+    function getRemainingRebuyPass(address user) public view returns (uint256) {
+        if (passInfo[user].hasRebuyPass && passInfo[user].RebuyPassExpiryDate > block.timestamp) {
+            return passInfo[user].RebuyPassExpiryDate - block.timestamp;
         } else {
             return 0;
         }
     }
 
-    function revokePenaltyPass(address user) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        passInfo[user].hasPenaltyPass = false;
+    function revokeRebuyPass(address user) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        passInfo[user].hasRebuyPass = false;
     }
 }
