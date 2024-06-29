@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+// BKOZ Referral system V1.0
 pragma solidity ^0.8.0;
 
 import "@thirdweb-dev/contracts/extension/ContractMetadata.sol";

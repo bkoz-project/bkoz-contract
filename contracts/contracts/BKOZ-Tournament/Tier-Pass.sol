@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+// BKOZ Tier Pass V1.0
 pragma solidity ^0.8.0;
 
 import "@thirdweb-dev/contracts/extension/PermissionsEnumerable.sol";
@@ -12,15 +13,15 @@ interface IERC20 {
 }
 
 // Pass Info 
-// 1 = Premium / 2 = Platinum
-contract BKOZPassControl is PermissionsEnumerable, Multicall, ContractMetadata{
+// 1 = Gold / 2 = Diamond
+contract TierPass is PermissionsEnumerable, Multicall, ContractMetadata{
     address public deployer;
 
     struct Pass {
-        bool hasPlatinum;
-        bool hasPremium;
-        uint256 platinumExpiryDate;
-        uint256 premiumExpiryDate;
+        bool hasDiamond;
+        bool hasGold;
+        uint256 DiamondExpiryDate;
+        uint256 GoldExpiryDate;
     }
 
     address public admin;
@@ -51,69 +52,69 @@ contract BKOZPassControl is PermissionsEnumerable, Multicall, ContractMetadata{
         require(token.transfer(msg.sender, balance), "Transfer failed");
     } 
 
-    // Platinum Pass
-    function getPlatinumPassPrice(address tokenAddress) public view returns (uint256) {
+    // Diamond Pass
+    function getDiamondPassPrice(address tokenAddress) public view returns (uint256) {
         require(supportedTokens[tokenAddress], "Token not supported");
         return passPrices[tokenAddress][2];
     }
 
-    function buyPlatinumPass(address _tokenAddress) public {
-        require(!hasValidPlatinumPass(msg.sender), "Already owns a valid Platinum pass");
+    function buyDiamondPass(address _tokenAddress) public {
+        require(!hasValidDiamondPass(msg.sender), "Already owns a valid Diamond pass");
         require(supportedTokens[_tokenAddress], "Token not supported");
         uint256 price = passPrices[_tokenAddress][2];
 
         IERC20 token = IERC20(_tokenAddress);
         require(token.transferFrom(msg.sender, address(this), price), "Token Transfer failed");
 
-        _issuePlatinumPass(msg.sender);
+        _issueDiamondPass(msg.sender);
     }
 
-    function _issuePlatinumPass(address user) internal {
-        passInfo[user].hasPlatinum = true;
-        passInfo[user].platinumExpiryDate = block.timestamp + DURATION;
+    function _issueDiamondPass(address user) internal {
+        passInfo[user].hasDiamond = true;
+        passInfo[user].DiamondExpiryDate = block.timestamp + DURATION;
     }
 
-    function hasValidPlatinumPass(address user) public view returns (bool) {
-        return passInfo[user].hasPlatinum && block.timestamp <= passInfo[user].platinumExpiryDate;
+    function hasValidDiamondPass(address user) public view returns (bool) {
+        return passInfo[user].hasDiamond && block.timestamp <= passInfo[user].DiamondExpiryDate;
     }
 
-    function getRemainingPlatinumPass(address user) public view returns (uint256) {
-        if (passInfo[user].hasPlatinum && passInfo[user].platinumExpiryDate > block.timestamp) {
-            return passInfo[user].platinumExpiryDate - block.timestamp;
+    function getRemainingDiamondPass(address user) public view returns (uint256) {
+        if (passInfo[user].hasDiamond && passInfo[user].DiamondExpiryDate > block.timestamp) {
+            return passInfo[user].DiamondExpiryDate - block.timestamp;
         } else {
             return 0;
         }
     }
 
-    // Premium Pass
-    function getPremiumPassPrice(address tokenAddress) public view returns (uint256) {
+    // Gold Pass
+    function getGoldPassPrice(address tokenAddress) public view returns (uint256) {
         require(supportedTokens[tokenAddress], "Token not supported");
         return passPrices[tokenAddress][1];
     }
 
-    function buyPremiumPass(address _tokenAddress) public {
-        require(!hasValidPremiumPass(msg.sender), "Already owns a valid dPremium pass");
+    function buyGoldPass(address _tokenAddress) public {
+        require(!hasValidGoldPass(msg.sender), "Already owns a valid dGold pass");
         require(supportedTokens[_tokenAddress], "Token not supported");
         uint256 price = passPrices[_tokenAddress][1];
 
         IERC20 token = IERC20(_tokenAddress);
         require(token.transferFrom(msg.sender, address(this), price), "Token Transfer failed");
 
-        _issuePremiumPass(msg.sender);
+        _issueGoldPass(msg.sender);
     }
 
-    function _issuePremiumPass(address user) internal {
-        passInfo[user].hasPremium = true;
-        passInfo[user].premiumExpiryDate = block.timestamp + DURATION;
+    function _issueGoldPass(address user) internal {
+        passInfo[user].hasGold = true;
+        passInfo[user].GoldExpiryDate = block.timestamp + DURATION;
     }
 
-    function hasValidPremiumPass(address user) public view returns (bool) {
-        return passInfo[user].hasPremium && block.timestamp <= passInfo[user].premiumExpiryDate;
+    function hasValidGoldPass(address user) public view returns (bool) {
+        return passInfo[user].hasGold && block.timestamp <= passInfo[user].GoldExpiryDate;
     }
 
-    function getRemainingPremiumPass(address user) public view returns (uint256) {
-        if (passInfo[user].hasPremium && passInfo[user].premiumExpiryDate > block.timestamp) {
-            return passInfo[user].premiumExpiryDate - block.timestamp;
+    function getRemainingGoldPass(address user) public view returns (uint256) {
+        if (passInfo[user].hasGold && passInfo[user].GoldExpiryDate > block.timestamp) {
+            return passInfo[user].GoldExpiryDate - block.timestamp;
         } else {
             return 0;
         }
@@ -121,16 +122,16 @@ contract BKOZPassControl is PermissionsEnumerable, Multicall, ContractMetadata{
 
     function checkBothPasses(address user) public view returns (bool[] memory) {
         bool[] memory passesStatus = new bool[](2);
-        passesStatus[0] = hasValidPlatinumPass(user);
-        passesStatus[1] = hasValidPremiumPass(user);
+        passesStatus[0] = hasValidDiamondPass(user);
+        passesStatus[1] = hasValidGoldPass(user);
         return passesStatus;
     }
 
-    function revokePlatinumPass(address user) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        passInfo[user].hasPlatinum = false;
+    function revokeDiamondPass(address user) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        passInfo[user].hasDiamond = false;
     }
 
-    function revokePremiumPass(address user) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        passInfo[user].hasPremium = false;
+    function revokeGoldPass(address user) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        passInfo[user].hasGold = false;
     }
 }
