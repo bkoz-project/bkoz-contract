@@ -1,0 +1,417 @@
+[
+  {
+    "type": "constructor",
+    "name": "",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_admin",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "_developer",
+        "internalType": "address"
+      },
+      {
+        "type": "uint256",
+        "name": "_adminSharePercentage",
+        "internalType": "uint256"
+      },
+      {
+        "type": "string",
+        "name": "_contractURI",
+        "internalType": "string"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "error",
+    "name": "ContractMetadataUnauthorized",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "type": "event",
+    "name": "AdminSharePercentageChanged",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "newAdminSharePercentage",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "ContractURIUpdated",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "prevURI",
+        "indexed": false,
+        "internalType": "string"
+      },
+      {
+        "type": "string",
+        "name": "newURI",
+        "indexed": false,
+        "internalType": "string"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "DeveloperAddressChanged",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newDeveloper",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "ItemPriceChanged",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "itemId",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "type": "uint256",
+        "name": "newPrice",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "ItemPurchased",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "buyer",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "type": "uint256",
+        "name": "itemId",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "type": "uint256",
+        "name": "amountSentToAdmin",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "amountSentToDeveloper",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "ItemRemoved",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "itemId",
+        "indexed": true,
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "ItemSet",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "itemId",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "type": "uint256",
+        "name": "price",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "function",
+    "name": "admin",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "adminSharePercentage",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "changeAdminSharePercentage",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newAdminSharePercentage",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "changeDeveloperAddress",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newDeveloper",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "changeItemPrice",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_itemId",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "_tokenAddress",
+        "internalType": "address"
+      },
+      {
+        "type": "uint256",
+        "name": "_newPrice",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "contractURI",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string",
+        "name": "",
+        "internalType": "string"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "developer",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getItemPrice",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_itemId",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "_tokenAddress",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "itemCount",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "items",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "itemId",
+        "internalType": "uint256"
+      },
+      {
+        "type": "bool",
+        "name": "exists",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "purchaseItem",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_itemId",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "_tokenAddress",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "removeItem",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_itemId",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setContractURI",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "_uri",
+        "internalType": "string"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setItem",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_itemId",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address[]",
+        "name": "_tokenAddresses",
+        "internalType": "address[]"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_prices",
+        "internalType": "uint256[]"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  }
+]
