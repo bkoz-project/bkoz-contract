@@ -41,15 +41,25 @@
 > * tBKOZ NFT (BKNFT) `0x6600Ee84700c635cdfDb6356f3702b1BF4307397`
 > * tBKOZ ENTRY Token (ENT) `0xE98EEcC429792e8495ec9514a9c944FD8ca9696C`
 > * tBKOZ Participation Reward Token (PRT) `0xD4Bd1a954A8340ae6FD9d8D81344331f563d88D6`
+> * tUSDC '0xBEB5A1C45a23AfA99091Bb7Dac75c5FC91A050C2'
 
 >### ManagedAccountFactory
 > * ManagedAccountFactory `0x9f24722F1812e01050048dD32c26561A939c1711`
 
->### BKOZ Pass Control
-> * BKOZ Pass Control `0xb665C09d29c5640dD39a12795B96df941f3A4C89`
+>### BKOZ Tier Pass
+> * BKOZ Pass Control `0x50A500196aD02bC1beF7cB0Fc820e6a177F3085A`
+
+>### BKOZ Penalty Pass
+> * BKOZ Pass Control `0x02BfC004cE4caf4b25924080e3553C177960FE7c`
+
+>### BKOZ Rebuy Pass
+> * BKOZ Pass Control `0xd6A40510b47cFf631A0240f84844E80c8c43ED46`
 
 >### BKOZ Referral System
-> * BKOZ Referral System `0x98886B460a3a9A2BABb696E9299e820264c80Ab6`
+> * BKOZ Referral System `0xA50Bf8d6429ec46C593e5175E6b1e32a0deeB8F1`
+
+>### BKOZ in App Item Purchase
+> * BKOZ Pass Control `0xAEA1f23f6a21852b62ceE50b5e15f117F176AB87`
 
 > ### ERC-1155 NFT Staking
 > #### BKOZ NFT Staking - Founders

@@ -12,10 +12,10 @@
   "testnet": {
     "TestGame": {
       "Tournament": {
-        "0.8.3": "0xfF0F0BB95cae23cc755e7c1b6b1398f6bFa7952f"
+        "0.8.3": "0xBB9cb8c026946B5BA07Cf02F8fc59787b36CaD90"
       },
       "Escrow": {
-        "0.8.3": "0x906460653A4440555a4BEc851e2aD77D60a1bFC7"
+        "0.8.3": "0xbA997F54e9A7Cb227D89526de363Df38841Eccbc"
       }
     }
   }
