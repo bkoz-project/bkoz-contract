@@ -253,18 +253,6 @@ contract ERC1155Staking is ReentrancyGuard, PermissionsEnumerable, ERC1155Holder
         emit EmergencyWithdraw(msg.sender, balance);
     }
 
-    // Administrative function to confiscate staked ERC-1155 tokens from a specific user.
-    function confiscateERC1155FromUser(address _user) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        // Access the staking information of the specified user.
-        StakingInfo storage info = stakings[_user];
-        // Ensure the user has staked tokens before proceeding.
-        require(info.amount > 0, "User has no staked tokens");
-        // Safely transfer the staked ERC-1155 tokens from this contract to the owner.
-        erc1155Token.safeTransferFrom(address(this), msg.sender, stakingTokenId, info.amount, "");
-        // Remove the user from the stakers list and reset their staking information.
-        removeStaker(_user);
-    }
-
     function _canSetContractURI() internal view virtual override returns (bool){
         return msg.sender == deployer;
     }
