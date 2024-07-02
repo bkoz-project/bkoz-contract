@@ -47,19 +47,19 @@
 > * ManagedAccountFactory `0x9f24722F1812e01050048dD32c26561A939c1711`
 
 >### BKOZ Tier Pass
-> * BKOZ Pass Control `0x50A500196aD02bC1beF7cB0Fc820e6a177F3085A`
+> * BKOZ Pass Control `0x5B5b1c784564D06BBB06bE2f522504422921eb84`
 
 >### BKOZ Penalty Pass
-> * BKOZ Pass Control `0x02BfC004cE4caf4b25924080e3553C177960FE7c`
+> * BKOZ Pass Control `0xFF03CB917D1693A38eef8CAf0E51925BfcE975dC`
 
 >### BKOZ Rebuy Pass
-> * BKOZ Pass Control `0xd6A40510b47cFf631A0240f84844E80c8c43ED46`
+> * BKOZ Pass Control `0x3593d31Cc8B693C5Db3D2b869B169327a3ccbB54`
 
 >### BKOZ Referral System
 > * BKOZ Referral System `0xA50Bf8d6429ec46C593e5175E6b1e32a0deeB8F1`
 
 >### BKOZ in App Item Purchase
-> * BKOZ Pass Control `0xAEA1f23f6a21852b62ceE50b5e15f117F176AB87`
+> * BKOZ Pass Control `0x50A25ee2F6F6bba980d19C911562e9A9Eb235cD9`
 
 > ### ERC-1155 NFT Staking
 > #### BKOZ NFT Staking - Founders
