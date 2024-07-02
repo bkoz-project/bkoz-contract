@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-// BKOZ Rebuy Pass V1.0
+// BKOZ Rebuy Pass V1.1
 pragma solidity ^0.8.0;
 
 import "@thirdweb-dev/contracts/extension/PermissionsEnumerable.sol";
@@ -26,6 +26,10 @@ contract RebuyPass is PermissionsEnumerable, Multicall, ContractMetadata{
     mapping(address => Pass) public passInfo;
     uint256 public constant DURATION = 30 days;
 
+    event PassPriceSet(uint256 indexed passType, address indexed tokenAddress, uint256 price);
+    event RebuyPassPurchased(address indexed user, address indexed tokenAddress, uint256 price);
+    event RebuyPassRevoked(address indexed user);
+
     constructor(string memory _contractURI) {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         deployer = msg.sender;
@@ -39,6 +43,7 @@ contract RebuyPass is PermissionsEnumerable, Multicall, ContractMetadata{
     function setPassPrice(uint256 passType, address tokenAddress, uint256 price) public onlyRole(DEFAULT_ADMIN_ROLE){
         supportedTokens[tokenAddress] = true;
         passPrices[tokenAddress][passType] = price;
+        emit PassPriceSet(passType, tokenAddress, price); 
     }
 
     function withdrawToken(address tokenAddress) public onlyRole(DEFAULT_ADMIN_ROLE){
@@ -63,6 +68,7 @@ contract RebuyPass is PermissionsEnumerable, Multicall, ContractMetadata{
         require(token.transferFrom(msg.sender, address(this), price), "Token Transfer failed");
 
         _issueRebuyPass(msg.sender);
+        emit RebuyPassPurchased(msg.sender, _tokenAddress, price);
     }
 
     function _issueRebuyPass(address user) internal {
@@ -84,5 +90,6 @@ contract RebuyPass is PermissionsEnumerable, Multicall, ContractMetadata{
 
     function revokeRebuyPass(address user) public onlyRole(DEFAULT_ADMIN_ROLE) {
         passInfo[user].hasRebuyPass = false;
+        emit RebuyPassRevoked(user);
     }
 }

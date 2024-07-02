@@ -30,6 +30,13 @@ contract TierPass is PermissionsEnumerable, Multicall, ContractMetadata{
     mapping(address => Pass) public passInfo;
     uint256 public constant DURATION = 30 days;
 
+    // 이벤트 선언
+    event PassPriceSet(uint256 indexed passType, address indexed tokenAddress, uint256 price);
+    event DiamondPassPurchased(address indexed user, address indexed tokenAddress, uint256 price);
+    event GoldPassPurchased(address indexed user, address indexed tokenAddress, uint256 price);
+    event DiamondPassRevoked(address indexed user);
+    event GoldPassRevoked(address indexed user);
+
     constructor(string memory _contractURI) {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         deployer = msg.sender;
@@ -43,6 +50,7 @@ contract TierPass is PermissionsEnumerable, Multicall, ContractMetadata{
     function setPassPrice(uint256 passType, address tokenAddress, uint256 price) public onlyRole(DEFAULT_ADMIN_ROLE){
         supportedTokens[tokenAddress] = true;
         passPrices[tokenAddress][passType] = price;
+        emit PassPriceSet(passType, tokenAddress, price); 
     }
 
     function withdrawToken(address tokenAddress) public onlyRole(DEFAULT_ADMIN_ROLE){
@@ -67,6 +75,7 @@ contract TierPass is PermissionsEnumerable, Multicall, ContractMetadata{
         require(token.transferFrom(msg.sender, address(this), price), "Token Transfer failed");
 
         _issueDiamondPass(msg.sender);
+        emit DiamondPassPurchased(msg.sender, _tokenAddress, price); 
     }
 
     function _issueDiamondPass(address user) internal {
@@ -93,7 +102,7 @@ contract TierPass is PermissionsEnumerable, Multicall, ContractMetadata{
     }
 
     function buyGoldPass(address _tokenAddress) public {
-        require(!hasValidGoldPass(msg.sender), "Already owns a valid dGold pass");
+        require(!hasValidGoldPass(msg.sender), "Already owns a valid Gold pass");
         require(supportedTokens[_tokenAddress], "Token not supported");
         uint256 price = passPrices[_tokenAddress][1];
 
@@ -101,6 +110,7 @@ contract TierPass is PermissionsEnumerable, Multicall, ContractMetadata{
         require(token.transferFrom(msg.sender, address(this), price), "Token Transfer failed");
 
         _issueGoldPass(msg.sender);
+        emit GoldPassPurchased(msg.sender, _tokenAddress, price); 
     }
 
     function _issueGoldPass(address user) internal {
@@ -129,9 +139,11 @@ contract TierPass is PermissionsEnumerable, Multicall, ContractMetadata{
 
     function revokeDiamondPass(address user) public onlyRole(DEFAULT_ADMIN_ROLE) {
         passInfo[user].hasDiamond = false;
+        emit DiamondPassRevoked(user); 
     }
 
     function revokeGoldPass(address user) public onlyRole(DEFAULT_ADMIN_ROLE) {
         passInfo[user].hasGold = false;
+        emit GoldPassRevoked(user); 
     }
 }
