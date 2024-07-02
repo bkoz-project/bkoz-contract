@@ -32,10 +32,8 @@ contract TierPass is PermissionsEnumerable, Multicall, ContractMetadata{
 
     // 이벤트 선언
     event PassPriceSet(uint256 indexed passType, address indexed tokenAddress, uint256 price);
-    event DiamondPassPurchased(address indexed user, address indexed tokenAddress, uint256 price);
-    event GoldPassPurchased(address indexed user, address indexed tokenAddress, uint256 price);
-    event DiamondPassRevoked(address indexed user);
-    event GoldPassRevoked(address indexed user);
+    event PassPurchased(address indexed user, uint256 passId, address indexed tokenAddress, uint256 price);
+    event PassRevoked(address indexed user, uint256 passId);
 
     constructor(string memory _contractURI) {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
@@ -75,7 +73,7 @@ contract TierPass is PermissionsEnumerable, Multicall, ContractMetadata{
         require(token.transferFrom(msg.sender, address(this), price), "Token Transfer failed");
 
         _issueDiamondPass(msg.sender);
-        emit DiamondPassPurchased(msg.sender, _tokenAddress, price); 
+        emit PassPurchased(msg.sender, 2, _tokenAddress, price); 
     }
 
     function _issueDiamondPass(address user) internal {
@@ -110,7 +108,7 @@ contract TierPass is PermissionsEnumerable, Multicall, ContractMetadata{
         require(token.transferFrom(msg.sender, address(this), price), "Token Transfer failed");
 
         _issueGoldPass(msg.sender);
-        emit GoldPassPurchased(msg.sender, _tokenAddress, price); 
+        emit PassPurchased(msg.sender, 1, _tokenAddress, price); 
     }
 
     function _issueGoldPass(address user) internal {
@@ -139,11 +137,11 @@ contract TierPass is PermissionsEnumerable, Multicall, ContractMetadata{
 
     function revokeDiamondPass(address user) public onlyRole(DEFAULT_ADMIN_ROLE) {
         passInfo[user].hasDiamond = false;
-        emit DiamondPassRevoked(user); 
+        emit PassRevoked(user, 2); 
     }
 
     function revokeGoldPass(address user) public onlyRole(DEFAULT_ADMIN_ROLE) {
         passInfo[user].hasGold = false;
-        emit GoldPassRevoked(user); 
+        emit PassRevoked(user, 1); 
     }
 }
