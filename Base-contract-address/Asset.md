@@ -50,7 +50,7 @@
 > * BKOZ Pass Control `0x5B5b1c784564D06BBB06bE2f522504422921eb84`
 
 >### BKOZ Penalty Pass
-> * BKOZ Pass Control `0xFF03CB917D1693A38eef8CAf0E51925BfcE975dC`
+> * BKOZ Pass Control `0x59562a87847e3ef8c7e1d91dbb8c3f994d7Cad2a`
 
 >### BKOZ Rebuy Pass
 > * BKOZ Pass Control `0x3593d31Cc8B693C5Db3D2b869B169327a3ccbB54`
