@@ -46,7 +46,6 @@ contract ReferralSystem is ContractMetadata, PermissionsEnumerable, Multicall{
         require(users.length == _referrers.length, "Users and referrers array length must match");
         
         for (uint256 i = 0; i < users.length; i++) {
-            require(_referrers[i] != address(0), "Referrer cannot be the zero address");
             require(_referrers[i] != msg.sender, "You cannot refer yourself");
             require(referrals[msg.sender] == address(0), "Referrer already set");
             referrals[users[i]] = _referrers[i];
