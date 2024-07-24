@@ -77,8 +77,15 @@ contract ERC1155Node is ReentrancyGuard, PermissionsEnumerable, ERC1155Holder, C
         require(erc1155Token.balanceOf(msg.sender, nodeTokenId) >= _amount, "Not enough ERC1155 tokens");
         // Access the user's node information.
         NodeInfo storage info = nodes[msg.sender];
-        // Safely transfer and burn ERC-1155 tokens from the user.
-        erc1155Token.burn(msg.sender, nodeTokenId, _amount);
+        
+        // Prepare data for burnBatch
+        uint256[] memory ids = new uint256[](1);
+        uint256[] memory amounts = new uint256[](1);
+        ids[0] = nodeTokenId;
+        amounts[0] = _amount;
+
+        // Safely burn ERC-1155 tokens from the user.
+        erc1155Token.burnBatch(msg.sender, ids, amounts);
 
         // Update the user's node information.
         if (info.amount > 0) {
