@@ -70,7 +70,7 @@ contract ERC1155Node is ReentrancyGuard, PermissionsEnumerable, ERC1155Holder, C
     }
 
     // Node function: Allows a user to use ERC-1155 tokens as nodes.
-    function useNode(uint256 _amount) external nonReentrant {
+    function activateNode(uint256 _amount) external nonReentrant {
         // Check pool status.
         require(!POOL_FINISHED, "Pool has finished.");
         // Check if the user has enough ERC-1155 tokens to use.
@@ -172,19 +172,16 @@ contract ERC1155Node is ReentrancyGuard, PermissionsEnumerable, ERC1155Holder, C
         // If the claim is made by an admin, calculate the admin fee.
         uint256 adminFee = isAdmin ? (reward * AGENT_FEE_PERCENTAGE) / 100 : 0;
 
-        // Ensure the contract has enough balance to transfer rewards.
-        require(rewardsToken.balanceOf(address(this)) >= reward, "Not enough rewards balance");
-
-        // If claimed by an admin, transfer the admin fee to the owner's address if applicable.
+        // If claimed by an admin, mintTo the admin fee to the owner's address if applicable.
         if (isAdmin && adminFee > 0) {
-            rewardsToken.transfer(msg.sender, adminFee);
+            rewardsToken.mintTo(msg.sender, adminFee);
         }
 
         // Calculate the user's net reward after deducting fees.
         uint256 userReward = reward - adminFee;
-        // Transfer the net reward to the user if applicable.
+        // mintTo the net reward to the user if applicable.
         if (userReward > 0) {
-            rewardsToken.transfer(_user, userReward);
+            rewardsToken.mintTo(_user, userReward);
         }
         totalRewardsDistributed = totalRewardsDistributed + reward;
         info.updateTime = block.timestamp;
@@ -239,24 +236,6 @@ contract ERC1155Node is ReentrancyGuard, PermissionsEnumerable, ERC1155Holder, C
         _claimReward(_user, false);
         // Update the user's node amount to the new quantity.
         info.amount = _newAmount;
-    }
-
-
-    // Deposit reward tokens into the contract
-    function rewardDeposit(uint256 amount) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(amount > 0, "Amount must be greater than zero");
-        // Transfer tokens from the user to the contract
-        rewardsToken.transferFrom(msg.sender, address(this), amount);
-        emit RewardDeposit(msg.sender, amount);
-    }
-
-    // Emergency withdraw function from contract
-    function rewardEmergencyWithdraw() external onlyRole(DEFAULT_ADMIN_ROLE){
-        uint256 balance = rewardsToken.balanceOf(address(this));
-        // Transfer tokens from the contract to the user.
-        rewardsToken.transfer(msg.sender, balance);
-        // Emit the emergency withdrawal event.
-        emit EmergencyWithdraw(msg.sender, balance);
     }
 
     function _canSetContractURI() internal view virtual override returns (bool){
