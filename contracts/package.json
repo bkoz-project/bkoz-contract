@@ -10,11 +10,12 @@
     "hardhat": "^2.13.0"
   },
   "dependencies": {
-    "react": "18.2.0",
     "@openzeppelin/contracts": "^5.0.2",
     "@openzeppelin/contracts-upgradeable": "^5.0.2",
     "@thirdweb-dev/contracts": "^3.8.0",
-    "thirdweb": "^5.19.1",
-    "zksync-web3": "^0.14.3"
+    "ethers": "^6.13.2",
+    "react": "^18.2.0",
+    "thirdweb": "^5.41.0",
+    "zksync-web3": "^0.17.1"
   }
 }

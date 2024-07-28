@@ -13,19 +13,19 @@
 > * ManagedAccountFactory `0x5C4b64b45763F5DDA54b8CE6C425bf9CE4703D2f
 
 >### BKOZ Pass Control
-> * BKOZ Pass Control `0x3cD97395cec193ae3ed7165D4B3067C69Afcad03`
+> * BKOZ Pass Control `NOTDEPLOYED`
 
 >### BKOZ Referral System
-> * BKOZ Referral System `0xc640Ba63288CfC99Fd374FC1F040494b658A9708`
+> * BKOZ Referral System `NOTDEPLOYED`
 
 > ### ERC-1155 NFT Staking
 > #### BKOZ NFT Staking - Founders
-> * v1.0 Contract address : `0xE62bf53dBe8cFd96084419d3dA19f19a0C85B46d`
+> * v1.0 Contract address : `NOTDEPLOYED`
 > * Pool start timestamp : 1721026800 2024년 7월 15일 월요일 오후 4:00:00 GMT+09:00
 > * Maximum NFT amount : 15,000 Founders
 > * Maximum staking amount : 1,500,000,000 BKOZ
 > #### BKOZ NFT Staking - Compact
-> * v2.1 Contract address : `0xF4c001566d4C5421971411d96498f85869Fa5780`
+> * v2.1 Contract address : `NOTDEPLOYED`
 > * Pool start timestamp : 1721026800 2024년 7월 15일 월요일 오후 4:00:00 GMT+09:00
 > * Maximum NFT amount : 50,000 Compact
 > * Maximum staking amount : 1,000,000,000 BKOZ
@@ -62,18 +62,18 @@
 > * BKOZ Pass Control `0x50A25ee2F6F6bba980d19C911562e9A9Eb235cD9`
 
 > ### ERC-1155 NFT Staking
-> #### BKOZ NFT Staking - Founders
-> * v1.0 Contract address : `0x438d0bdF8E78adbFae6b4A01A7e7dF3D47e144Ff`
+> #### BKOZ Founders Node
+> * v1.0 Contract address : `0x319A9130974581De6BA3cd0E6E6bBC8397b5DdA1`
 > * Pool start timestamp : `1718064000` 2024 April 11st Thursday AM 00:00:00 UTC
 > * Maximum NFT amount : 15,000 Founders
 > * Maximum staking amount : 1,500,000,000 BKOZ
-> #### BKOZ NFT Staking - Compact
-> * v2.1 Contract address : `0xe5E06A6A67cf747f00E2Cc83FB6C04b9dF5C925a`
+> #### BKOZ Compact Node
+> * v2.1 Contract address : `0x7E968535b4107998a426FE8b63296576eD0DF210`
 > * Pool start timestamp : `1718064000` 2024 April 11st Thursday AM 00:00:00 UTC
 > * Maximum NFT amount : 50,000 Compact
 > * Maximum staking amount : 1,000,000,000 BKOZ
 
 > ### Dual Reward ERC-20 Token Staking
-> #### Dual Reward Staking v1.3.1 BKOZ to ENT `NOT DEPLOYED`
+> #### Dual Reward Staking v1.3.1 BKOZ to ENT `NOTDEPLOYED`
 > * BKOZ APR 0.0%
 > * ENT APR 600.0%
