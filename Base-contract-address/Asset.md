@@ -12,21 +12,31 @@
 >### ManagedAccountFactory
 > * ManagedAccountFactory `0x5C4b64b45763F5DDA54b8CE6C425bf9CE4703D2f
 
->### BKOZ Pass Control
-> * BKOZ Pass Control `NOTDEPLOYED`
+>### BKOZ Tier Pass
+> * BKOZ Pass Control `0xb170EC619A81753210223012f490ceB5eD6cf6c4`
+> * Gold Pass 000 PRT
+> * Diamond Pass 000 PRT
+
+>### BKOZ Penalty Pass
+> * BKOZ Pass Control `0xE3dF5d6681989B9344c507F22c42e0A76699B85b`
+> * Penalty Pass 000 PRT
+
+>### BKOZ Rebuy Pass
+> * BKOZ Pass Control `0xd8821BB9f8419283B8a78B5FD0cfe059cb1e0CC8`
+> * Rebuy Pass 000 PRT
 
 >### BKOZ Referral System
-> * BKOZ Referral System `NOTDEPLOYED`
+> * BKOZ Referral System `0x7fb8D65DEcFe726A2a0dA8E0860deA0732A782b5`
 
 > ### ERC-1155 NFT Staking
 > #### BKOZ NFT Staking - Founders
-> * v1.0 Contract address : `NOTDEPLOYED`
-> * Pool start timestamp : 1721026800 2024년 7월 15일 월요일 오후 4:00:00 GMT+09:00
+> * v1.0 Contract address : `0xfBd894920e951554aE8de63B7afc7Cc706424894`
+> * Pool start timestamp : 1723100400 2024년 August 8일 Thursday AM 7:00:00 GMT
 > * Maximum NFT amount : 15,000 Founders
 > * Maximum staking amount : 1,500,000,000 BKOZ
 > #### BKOZ NFT Staking - Compact
-> * v2.1 Contract address : `NOTDEPLOYED`
-> * Pool start timestamp : 1721026800 2024년 7월 15일 월요일 오후 4:00:00 GMT+09:00
+> * v2.1 Contract address : `0xA0Dcc54993E83A18b33cC19c7ac5de72EF84F5B2`
+> * Pool start timestamp : 1723100400 2024년 August 8일 Thursday AM 7:00:00 GMT
 > * Maximum NFT amount : 50,000 Compact
 > * Maximum staking amount : 1,000,000,000 BKOZ
 
