@@ -1,7 +1,7 @@
 # Mainnet
 >### Asset
 > * BKOZ Token (BKOZ) `0x3733709491F6D6f49F0B9A542231390095DfDA32`
-> * BKOZ NFT (BKNFT) `0x24fd9A28b46a7D9B7708c35Fc10bF11a493B30D0`
+> * BKOZ NFT (BKNFT) `0x49114f0160Bb7C1E3f77edf94504e334492585FB`
 > * BKOZ ENTRY Token (ENT) `0xB6bFE4eF9576163a57e8341aD0a8A07Cad0004C6`
 > * BKOZ Participation Reward Token (PRT) `0x01C2A9c84357ad21488F49854a0Eb363427a90b5`
 
@@ -14,16 +14,16 @@
 
 >### BKOZ Tier Pass
 > * BKOZ Pass Control `0xb170EC619A81753210223012f490ceB5eD6cf6c4`
-> * Gold Pass 000 PRT
-> * Diamond Pass 000 PRT
+> * Gold Pass 1,000 PRT
+> * Diamond Pass 2,000 PRT
 
 >### BKOZ Penalty Pass
 > * BKOZ Pass Control `0xE3dF5d6681989B9344c507F22c42e0A76699B85b`
-> * Penalty Pass 000 PRT
+> * Penalty Pass 1,000 BKOZ / 700 PRT
 
 >### BKOZ Rebuy Pass
 > * BKOZ Pass Control `0xd8821BB9f8419283B8a78B5FD0cfe059cb1e0CC8`
-> * Rebuy Pass 000 PRT
+> * Rebuy Pass 1,000 PRT
 
 >### BKOZ Referral System
 > * BKOZ Referral System `0x7fb8D65DEcFe726A2a0dA8E0860deA0732A782b5`
