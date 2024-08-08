@@ -19,7 +19,7 @@
 
 >### BKOZ Penalty Pass
 > * BKOZ Pass Control `0xE3dF5d6681989B9344c507F22c42e0A76699B85b`
-> * Penalty Pass 1,000 BKOZ / 700 PRT
+> * Penalty Pass 1,000 BKOZ
 
 >### BKOZ Rebuy Pass
 > * BKOZ Pass Control `0xd8821BB9f8419283B8a78B5FD0cfe059cb1e0CC8`
